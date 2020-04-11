@@ -21,7 +21,7 @@ export default {
   methods: {
     async signIn() {
       try {
-        const response = await this.$plugin.google.signIn();
+        const response = await this.$googleAuth.signIn();
         this.$emit('signedIn', response);
       } catch (e) {
         this.$emit('signInError', e);

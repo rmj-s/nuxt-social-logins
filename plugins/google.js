@@ -2,7 +2,7 @@ import Vue from 'vue';
 import GoogleButton from '../components/GoogleButton';
 
 export default () => {
-	const options = JSON.parse('<%= JSON.strinfigy(options) %>');
+	const options = JSON.parse('<%= JSON.stringify(options) %>');
 
 	if (!options.clientId) {
 		console.error('Please provide client ID for your Google Platform app!');
@@ -13,6 +13,7 @@ export default () => {
 	const googleAuth = {
 		init: () => {
 			return new Promise((resolve) => {
+                // TODO: Catch not whitelisted error
 				gapi.load('auth2', async () => {
 					auth2 = await gapi.auth2.init({
 						clientId: options.clientId,
@@ -68,17 +69,18 @@ export default () => {
 		},
 		signOut: () => {
 			return new Promise((resolve, reject) => {
-                auth2.signOut()
-                .then(() => {
-                    resolve('Signed out successfully!')
-                })
-                .catch(() => {
-                    reject('Sign out was unsuccessful!')
-                })
-            });
+				auth2
+					.signOut()
+					.then(() => {
+						resolve('Signed out successfully!');
+					})
+					.catch(() => {
+						reject('Sign out was unsuccessful!');
+					});
+			});
 		},
-    };
-    
-    Vue.prototype.$googleAuth = googleAuth;
-    Vue.component('google-button', GoogleButton);
+	};
+
+	Vue.prototype.$googleAuth = googleAuth;
+	Vue.component('google-button', GoogleButton);
 };
