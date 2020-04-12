@@ -1,6 +1,6 @@
 {
   "name": "@glarus-labs/nuxt-social-logins",
-  "version": "1.1.0-alpha.1",
+  "version": "1.1.0-alpha.2",
   "description": "Nuxt plugin to enable client-side social logins",
   "main": "module.js",
   "repository": "https://github.com/GlarusLabs/nuxt-social-logins.git",
