@@ -70,7 +70,7 @@ or in a separate `socialLogins` key:
 
 ## <a id="config"></a>Configuration
 
-Different login providers can be enabled by passing configuration for them in the module options. Each of the providers will then get injected to the app's Vue prototype.
+By default, all login providers will be disabled unless you pass configuration for them in the module options. If enabled, each provider will register as a separate plugin in the Vue prototype.
 
 ##### Note: Since the plugin is intended to only be used from the client, it isn't available in the context of the application (e.g. in AsyncData())
 

@@ -1,6 +1,6 @@
 <template>
-  <div @click="signIn" class="google-btn" :class="customClass">
-    <img class="icon" src="../assets/google_logo.svg" />
+  <div @click="signIn" class="facebook-btn" :class="customClass">
+    <img class="icon" src="../assets/facebook_logo.svg" />
     <div class="title">{{ buttonText }}</div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   methods: {
     async signIn() {
       try {
-        const response = await this.$googleAuth.signIn();
+        const response = await this.$fbAuth.signIn();
         this.$emit('signedIn', response);
       } catch (e) {
         this.$emit('signInError', e);
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style scoped>
-.google-btn {
+.facebook-btn {
   padding: 8px;
   border: thin solid #888;
   border-radius: 5px;
