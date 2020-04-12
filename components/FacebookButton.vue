@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "google-button",
+  name: "facebook-button",
   props: {
     customClass: {
       type: String,
@@ -15,7 +15,7 @@ export default {
     },
     buttonText: {
       type: String,
-      default: "Sign in with Google"
+      default: "Sign in with Facebook"
     }
   },  
   methods: {

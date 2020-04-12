@@ -13,11 +13,11 @@ export default () => {
 		return;
 	}
 
-	facebook = {
+	const fbAuth = {
 		init: () => {
 			return new Promise(async (resolve) => {
 				await FB.init({
-					appId: options.facebook.appId,
+					appId: options.appId,
 					autoLogAppEvents: true,
 					xfbml: false,
 					version: 'v6.0',
@@ -38,7 +38,7 @@ export default () => {
 						});
 					} else {
 						resolve({
-							signIn: false,
+							signedIn: false,
 							userData: null,
 						});
 					}
