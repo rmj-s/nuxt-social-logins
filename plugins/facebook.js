@@ -5,7 +5,7 @@ const USER_PROFILE_QUERY = {
 	fields: 'id, first_name, last_name, email',
 };
 
-export default () => {
+export default (ctx, inject) => {
 	const options = JSON.parse('<%= JSON.stringify(options) %>');
 
 	if (!options.appId) {
@@ -78,6 +78,7 @@ export default () => {
 		},
 	};
 
-	Vue.prototype.$fbAuth = fbAuth;
+	ctx.$fbAuth = fbAuth
+  inject('fbAuth', fbAuth)
 	Vue.component('facebook-button', FacebookButton);
 };
