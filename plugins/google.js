@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import GoogleButton from '../components/GoogleButton';
 
-export default () => {
+export default (ctx, inject) => {
 	const options = JSON.parse('<%= JSON.stringify(options) %>');
 
 	if (!options.clientId) {
@@ -81,6 +81,7 @@ export default () => {
 		},
 	};
 
-	Vue.prototype.$googleAuth = googleAuth;
+	ctx.$googleAuth = googleAuth
+	inject('googleAuth', googleAuth)	
 	Vue.component('google-button', GoogleButton);
 };
