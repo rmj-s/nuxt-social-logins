@@ -54,6 +54,7 @@ export default (ctx, inject) => {
 							firstName: profile.getGivenName(),
 							lastName: profile.getFamilyName(),
 							email: profile.getEmail(),
+							id_token: auth2.currentUser.get().getAuthResponse().id_token
 						};
 
 						resolve({
@@ -82,6 +83,6 @@ export default (ctx, inject) => {
 	};
 
 	ctx.$googleAuth = googleAuth
-	inject('googleAuth', googleAuth)	
+	inject('googleAuth', googleAuth)
 	Vue.component('google-button', GoogleButton);
 };

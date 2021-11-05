@@ -58,6 +58,7 @@ export default (ctx, inject) => {
 										firstName: profile.first_name,
 										lastName: profile.last_name,
 										email: profile.email,
+										accessToken: response.authResponse.accessToken
 									},
 								});
 							});
