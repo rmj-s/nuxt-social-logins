@@ -20,7 +20,7 @@ export default (ctx, inject) => {
 					appId: options.appId,
 					autoLogAppEvents: true,
 					xfbml: false,
-					version: 'v6.0',
+					version: 'v12.0',
 				});
 
 				FB.getLoginStatus((res) => {
