@@ -1,3 +1,4 @@
+import jwt_decode from 'jwt-decode';
 import Vue from 'vue';
 import GoogleButton from '../components/GoogleButton';
 
@@ -9,76 +10,47 @@ export default (ctx, inject) => {
 		return;
 	}
 
-	let auth2 = null;
 	const googleAuth = {
-		init: () => {
-			return new Promise((resolve) => {
-                // TODO: Catch not whitelisted error
-				gapi.load('auth2', async () => {
-					auth2 = await gapi.auth2.init({
-						clientId: options.clientId,
-					});
+		init: (element, callback, styling = null) => {
+      google.accounts.id.initialize({
+        client_id: options.clientId,
+        ux_mode: 'popup',
+        callback: (response) => {
+          const responsePayload = jwt_decode(response.credential);
 
-					let userData = null;
-					const signedIn = auth2.isSignedIn.get();
+          const userData = {
+            id: responsePayload.sub,
+            firstName: responsePayload.given_name,
+            lastName: responsePayload.given_name,
+            email: responsePayload.email,
+            id_token: response.credential
+          };
 
-					if (signedIn) {
-						const profile = auth2.currentUser
-							.get()
-							.getBasicProfile();
-						userData = {
-							id: profile.getId(),
-							firstName: profile.getGivenName(),
-							lastName: profile.getFamilyName(),
-							email: profile.getEmail(),
-						};
-					}
+          callback({
+            signedIn: true,
+            userData: userData
+          });
+        }
+      });
 
-					resolve({
-						signedIn: signedIn,
-						userData: userData,
-					});
-				});
-			});
+      if (styling === null) {
+        styling = {
+          theme: 'outline',
+          size: 'large',
+          shape: 'pill'
+        };
+      }
+
+      google.accounts.id.renderButton(
+        element,
+        styling
+      );
 		},
 		signIn: () => {
-			return new Promise((resolve, reject) => {
-				auth2
-					.signIn()
-					.then(() => {
-						const profile = auth2.currentUser
-							.get()
-							.getBasicProfile();
-						const userData = {
-							id: profile.getId(),
-							firstName: profile.getGivenName(),
-							lastName: profile.getFamilyName(),
-							email: profile.getEmail(),
-							id_token: auth2.currentUser.get().getAuthResponse().id_token
-						};
-
-						resolve({
-							signedIn: true,
-							userData: userData,
-						});
-					})
-					.catch((err) => {
-						// TODO: Log error? Expose it?
-						reject('Sign in was unsuccessful!');
-					});
-			});
+      google.accounts.id.prompt()
 		},
-		signOut: () => {
-			return new Promise((resolve, reject) => {
-				auth2
-					.signOut()
-					.then(() => {
-						resolve('Signed out successfully!');
-					})
-					.catch(() => {
-						reject('Sign out was unsuccessful!');
-					});
-			});
+		signOut: (hint, callback) => {
+      google.accounts.id.revoke(hint, callback);
 		},
 	};
 

@@ -8,7 +8,7 @@ export default function (moduleOptions) {
 		...moduleOptions,
 		...this.options.socialLogins,
     };
-    
+
     this.options.head.link.push({
         rel: 'stylesheet',
         type: 'text/css',
@@ -19,7 +19,7 @@ export default function (moduleOptions) {
 	// TODO: How to make them async and check if loaded from init methods?
 	if (options.google) {
 		this.options.head.script.push({
-			src: 'https://apis.google.com/js/platform.js',
+			src: 'https://accounts.google.com/gsi/client',
 			async: false,
 			defer: false,
 		});
@@ -55,7 +55,7 @@ export default function (moduleOptions) {
 	        mode: 'client',
 	        options: options.facebook
         });
-        
+
         this.addTemplate({
 			src: path.resolve(__dirname, 'components/FacebookButton.vue'),
 			fileName: BUILD_TARGET_DIR + '/components/FacebookButton.vue',
